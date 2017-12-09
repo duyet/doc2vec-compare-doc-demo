@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html ng-app="duyet" ng-controller="controller">
+<head>
+	<title>Demo</title>
+	<link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/app.css">
+
+</head>
+<body>
+ <div class="container">
+
+      <header class="masthead">
+        <h3 class="text-muted">Thesis demo</h3>
+
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary mb-3">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav text-md-center nav-justified w-100">
+              <li class="nav-item {% if page == 'compare_2' %}active{% endif %}">
+                <a class="nav-link" href="/">Compare two file</a>
+              </li>
+              <li class="nav-item {% if page == 'compare_all' %}active{% endif %}">
+                <a class="nav-link" href="/compare_all">Compare in database</a>
+              </li>
+              <li class="nav-item {% if page == 'list_data' %}active{% endif %}">
+                <a class="nav-link" href="/list_data">List data file</a>
+              </li>
+              
+            </ul>
+          </div>
+        </nav>
+      </header>
+
+      <main role="main">
+
+      	{% if page == 'compare_2' %}
+			<div class="jumbotron">
+			  <h1>Compare 2 content</h1>
+			</div>
+
+			<div class="row">
+				<div class="col">
+
+					<div class="form-group">
+						<label for="selectFile1">Select a file</label>
+    					<input type="file" class="form-control-file" id="selectFile1" onchange='handleFileSelect("selectFile1", "contentInput1");'>
+					</div>
+
+					<div class="form-group">
+					    <label for="contentInput1">Or paste content here</label>
+					    <textarea class="form-control" id="contentInput1" rows="5"></textarea>
+					  </div>		
+				</div>
+
+				<div class="col">
+					<div class="form-group">
+						<label for="selectFile2">Select a file</label>
+    					<input type="file" class="form-control-file" id="selectFile2" onchange='handleFileSelect("selectFile2", "contentInput2");'>
+					</div>
+
+					<div class="form-group">
+					    <label for="contentInput2">Or paste content here</label>
+					    <textarea class="form-control" id="contentInput2" rows="5"></textarea>
+					  </div>		
+				</div>
+			</div>
+
+
+			<div class="row">
+				
+			</div>
+
+      	{% endif %}
+
+      	{% if page == 'compare_all' %}
+			<div class="jumbotron">
+			  <h1>Compare content with database</h1>
+			</div>
+
+			<div class="row">
+				<div class="col">
+
+					<div class="form-group">
+						<label for="selectFile1">Select a file</label>
+    					<input type="file" class="form-control-file" id="selectFile1" onchange='handleFileSelect("selectFile1", "contentInput1");'>
+					</div>
+
+					<div class="form-group">
+					    <label for="contentInput1">Or paste content here</label>
+					    <textarea class="form-control" id="contentInput1" rows="5"></textarea>
+					  </div>		
+				</div>
+
+			</div>
+
+
+			<div class="row">
+				
+			</div>
+
+      	{% endif %}
+
+      	{% if page == 'list_data' %}
+		    <div class="jumbotron">
+	          <h1>All data file in directory</h1>
+	        </div>
+
+	        <div class="row">
+	        	<div class="col-4">
+	        		<ul class="list-group" ng-init="active_index=-1">
+					  <li class="list-group-item" 
+					  ng-repeat="file in list_data" 
+					  ng-class="file == active_index ? 'active' : ''" 
+					  ng-bind="file"
+					  ng-click="load_file(file)"></li>
+					</ul>
+
+	        	</div>
+	        	<div class="col-8">
+	        		<p ng-bind="file_content"></p>
+	        	</div>
+	        </div>
+
+	        
+      	{% endif %}
+
+
+      </main>
+
+</body>
+	<script src="/static/js/jquery-1.9.1.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-sanitize.js"></script>
+	<script src="/static/js/utils.js?r={{range(1, 9999) | random}}"></script>
+	{% if page == 'compare_2' %}
+		<script type="text/javascript" src="/static/js/compare_2.js?r={{range(1, 9999) | random}}"></script>
+	{% endif %}
+	{% if page == 'compare_all' %}
+		<script type="text/javascript" src="/static/js/compare_all.js?r={{range(1, 9999) | random}}"></script>
+	{% endif %}
+	{% if page == 'list_data' %}
+		<script type="text/javascript" src="/static/js/list_data.js?r={{range(1, 9999) | random}}"></script>
+	{% endif %}
+</html>
