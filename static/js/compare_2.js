@@ -1,34 +1,20 @@
-$("textarea").each(function(textarea) {
-    $(this).height( $(this).scrollHeight );
-});
-
-function handleFileSelect(inputId, outputId) {               
-	if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
-	  alert('The File APIs are not fully supported in this browser.');
-	  return;
-	}
-
-	input = document.getElementById(inputId);
-	if (!input) {
-	  alert("Um, couldn't find the element.");
-	}
-	else if (!input.files) {
-	  alert("This browser doesn't seem to support the `files` property of file inputs.");
-	}
-	else if (!input.files[0]) {
-	  alert("Please select a file before clicking 'Load'");               
-	}
-	else {
-	  file = input.files[0];
-	  fr = new FileReader();
-	  fr.onload = function() {
-	  	$('#' + outputId).val(fr.result)
-	  };
-	  fr.readAsText(file);
-	}
-}
 
 var app = angular.module('duyet', []);
 app.controller('controller', function ($scope, $http) {
-	
+	$scope.compare = function() {
+		$scope.compare_result = null;
+
+		var doc1 = $('#contentInput1').val();
+		var doc2 = $('#contentInput2').val();
+
+		if (!doc1 || !doc2) return alert("Please select an input.")
+
+		var data = { doc1: doc1, doc2: doc2 };
+
+		$http.post('/api/compare_2', data).then(function(response) {
+			$scope.compare_result = response.data;
+		}, function(response) {
+			alert('Something went wrong');
+		})
+	}
 })

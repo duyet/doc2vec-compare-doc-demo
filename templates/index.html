@@ -25,7 +25,7 @@
                 <a class="nav-link" href="/compare_all">Compare in database</a>
               </li>
               <li class="nav-item {% if page == 'list_data' %}active{% endif %}">
-                <a class="nav-link" href="/list_data">List data file</a>
+                <a class="nav-link" href="/list_data">List data in DB</a>
               </li>
               
             </ul>
@@ -40,7 +40,7 @@
 			  <h1>Compare 2 content</h1>
 			</div>
 
-			<div class="row">
+			<div class="row justify-content-center">
 				<div class="col">
 
 					<div class="form-group">
@@ -68,8 +68,19 @@
 			</div>
 
 
-			<div class="row">
-				
+			<div class="row justify-content-center">
+				<div class="col-6 center">
+					<button ng-click="compare()" class="btn btn-primary btn-lg btn-block">Compare</button>
+				</div>
+			</div>
+
+			<div class="row" ng-show="compare_result.sim">
+				<div class="col">
+					<br>
+					<div class="alert alert-primary" role="alert">
+					  <span>Similarity score of two document is <strong ng-bind="compare_result.sim"></strong></span>
+					</div>
+				</div>
 			</div>
 
       	{% endif %}
@@ -96,8 +107,32 @@
 			</div>
 
 
-			<div class="row">
-				
+			<div class="row justify-content-center">
+				<div class="col-6 center">
+					<button ng-click="compare()" class="btn btn-primary btn-lg btn-block">Compare</button>
+				</div>
+			</div>
+
+			<div class="row" ng-show="compare_result.list">
+				<div class="col">
+					<br>
+					<h3>Most similar</h3>
+					<br>
+					<ul class="list-group">
+					  <li class="list-group-item d-flex justify-content-between align-items-center"
+					  ng-repeat="item in compare_result.list"
+					  ng-click="load_file(item[0])">
+					    <span ng-bind="item[0]"></span>
+						<span class="badge badge-primary badge-pill" ng-bind="item[1]"></span>
+					  </li>
+					</ul>
+					<br>
+				</div>
+
+				<div class="col" ng-show="file_content">
+					<br>
+					<p ng-bind="file_content"></p>
+				</div>
 			</div>
 
       	{% endif %}
@@ -105,6 +140,12 @@
       	{% if page == 'list_data' %}
 		    <div class="jumbotron">
 	          <h1>All data file in directory</h1>
+	        </div>
+
+	        <div class="row">
+	        	<p>
+	        		Click in list to view file content.
+	        	</p>
 	        </div>
 
 	        <div class="row">
@@ -123,9 +164,12 @@
 	        	</div>
 	        </div>
 
+
+	        	<p>
+	        		<br>Add more content to <code>/data</code> folder and <a href="/api/train_model">click here to re-train model.</a>
+	        	</p>
 	        
       	{% endif %}
-
 
       </main>
 

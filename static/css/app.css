@@ -18,3 +18,12 @@ body {
   padding: 14px 24px;
   font-size: 21px;
 }
+.list-group-item {
+	cursor: pointer;
+}
+
+@media (min-width: 576px) {
+	.jumbotron {
+	    padding: 2rem 2rem;
+	}	
+}
