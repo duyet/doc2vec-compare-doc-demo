@@ -1,2 +1,2 @@
-flask==0.12.1
+flask==1.0
 gensim==2.3.0
